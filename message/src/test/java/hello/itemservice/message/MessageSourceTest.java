@@ -20,6 +20,8 @@ public class MessageSourceTest {
 
     @Test
     void helloMessage(){
+        //application.properties 파일에 basename로 messages를 지정 했으므로 messages.properties 파일에서 데이터 조회한다.
+        //spring.messages.basename=messages,config.i18n.messages
         String result = messageSoruce.getMessage("hello", null, null);
         assertThat(result).isEqualTo("안녕");
     }
@@ -35,8 +37,8 @@ public class MessageSourceTest {
     @Test
     void notFoundMessageCodeDefaultMessage(){
 
-        String result = messageSoruce.getMessage("no_code", null, "기본 메시지", null);
-        assertThat(result).isEqualTo("기본 메시지");
+        String result = messageSoruce.getMessage("no_code", null, "default messages", null);
+        assertThat(result).isEqualTo("default messages");
 
     }
 
@@ -44,6 +46,12 @@ public class MessageSourceTest {
     void argumentMessage(){
         String message = messageSoruce.getMessage("hello.name" , new Object[]{"Spring"}, null);
         assertThat(message).isEqualTo("안녕 Spring");
+    }
+
+    @Test
+    void twoArgumentMessage(){
+        String message = messageSoruce.getMessage("hello.name.param" , new Object[]{"Spring","Basic"}, null);
+        assertThat(message).isEqualTo("안녕 Spring Basic");
     }
 
     @Test
