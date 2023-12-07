@@ -12,7 +12,7 @@ public class ItemSaveForm {
     private String itemName;
 
     @NotNull
-    @Range(min = 1000, max = 1000000)
+    @Range(min = 1000, max = 1000000, message="1,000 ~ 1,000,000 값을 입력 하세요.")
     private Integer price;
 
     @NotNull

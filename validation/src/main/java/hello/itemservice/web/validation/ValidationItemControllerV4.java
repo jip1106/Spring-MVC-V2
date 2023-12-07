@@ -20,7 +20,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/validation/v4/items")
 @RequiredArgsConstructor
-public class ValidationItemControllerV4 {
+public class ValidationItemControllerV4 {   //Entity가 아닌 DTO에 Bean Validation 추가
 
     private final ItemRepository itemRepository;
 

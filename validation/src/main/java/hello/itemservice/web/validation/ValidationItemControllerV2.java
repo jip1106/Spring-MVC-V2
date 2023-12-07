@@ -32,6 +32,7 @@ public class ValidationItemControllerV2 {
 
     @InitBinder
     public void init(WebDataBinder dataBinder){
+        log.info("init binder {}" , dataBinder);
         dataBinder.addValidators(itemValidator);
     }
 
@@ -55,6 +56,7 @@ public class ValidationItemControllerV2 {
         return "validation/v2/addForm";
     }
 
+    //BindingResult bindingResult 파라미터의 위치는 @ModelAttribute Item item 다음에 와야 한다
     @PostMapping("/addV1")
     public String addItemV1(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
@@ -132,6 +134,8 @@ public class ValidationItemControllerV2 {
         return "redirect:/validation/v2/items/{itemId}";
     }
 
+    //errors.properties 파일로 검증 메시지 처리 ->
+    // application.properties 파일에 spring.messages.basename=messages,errors  (errors) 추가
     @PostMapping("/addV3")
     public String addItemV3(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
@@ -172,6 +176,8 @@ public class ValidationItemControllerV2 {
         return "redirect:/validation/v2/items/{itemId}";
     }
 
+    //컨트롤러에서 BindingResult 는 검증해야 할 객체인 target 바로 다음에 온다. 따라서
+    //BindingResult 는 이미 본인이 검증해야 할 객체인 target 을 알고 있다.
     @PostMapping("/addV4")
     public String addItemV4(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
         log.info("objectName={}" , bindingResult.getObjectName());
@@ -218,9 +224,10 @@ public class ValidationItemControllerV2 {
         return "redirect:/validation/v2/items/{itemId}";
     }
 
-
+    //ItemValidator 사용
     @PostMapping("/addV5")
     public String addItemV5(@ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        //ItemValidator 검증기 호출
         itemValidator.validate(item, bindingResult);
 
         //검증에 실패하면 다시 입력 폼으로
@@ -238,6 +245,9 @@ public class ValidationItemControllerV2 {
     }
 
 
+    //InitBinder 실행
+    // validator을 직접 호출하는 부분이 사라지고, 대신에 검증 앞에 @Validated 가 붙음
+    // @Validated는 검증기를 실행하라는 애노테이션
     @PostMapping("/add")
     public String addItemV6(@Validated @ModelAttribute Item item, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
         //itemValidator.validate(item, bindingResult); @Validated 애노테이션으로 대체
