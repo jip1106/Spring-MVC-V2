@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Slf4j
 @Controller
@@ -27,6 +27,8 @@ public class HomeController {
         return "home";
     }
 
+    //@CookieValue를 사용하면 편하게 쿠키를 조회할 수 있음
+    // 로그인 하지 않은 사용자도 홈에 접근할 수 있기 때문에 required = false를 사용
     @GetMapping("/V1")
     public String homeLoginV1(@CookieValue(name="memberId", required = false) Long memberId, Model model){
         if(memberId == null){
@@ -81,6 +83,7 @@ public class HomeController {
     }
 
 
+    //스프링은 세션을 더 편리하게 사용할 수 있도록 @SessionAttribute 를 지원
     @GetMapping("/V3Spring")
     public String homeLoginV3Spring(@SessionAttribute(name=SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
 

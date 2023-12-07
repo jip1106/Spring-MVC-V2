@@ -3,6 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Spring-MVC-V2-master.iml" filepath="$PROJECT_DIR$/.idea/Spring-MVC-V2-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/form.main.iml" filepath="$PROJECT_DIR$/.idea/modules/form.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/login.main.iml" filepath="$PROJECT_DIR$/.idea/modules/login.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/thymeleaf-basic.main.iml" filepath="$PROJECT_DIR$/.idea/modules/thymeleaf-basic.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/validation.main.iml" filepath="$PROJECT_DIR$/.idea/modules/validation.main.iml" />
     </modules>
   </component>
 </project>

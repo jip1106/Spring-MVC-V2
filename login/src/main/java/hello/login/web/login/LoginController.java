@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,6 +33,7 @@ public class LoginController {
         return "login/loginForm";
     }
 
+    //쿠키 사용
     @PostMapping("/loginV1")
     public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletResponse response){
         if(bindingResult.hasErrors()){
@@ -57,6 +58,7 @@ public class LoginController {
         return "redirect:/";
     }
 
+    //직접 만든 세션 적용
     @PostMapping("/loginV2")
     public String loginV2(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletResponse response){
         if(bindingResult.hasErrors()){
@@ -80,6 +82,7 @@ public class LoginController {
         return "redirect:/";
     }
 
+    //서블릿이 공식 지원하는 세션
     @PostMapping("/loginV3")
     public String loginV3(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletRequest request){
         if(bindingResult.hasErrors()){
@@ -95,8 +98,10 @@ public class LoginController {
 
         //로그인 성공 처리
         //세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성
-        HttpSession session = request.getSession();
-
+        HttpSession session = request.getSession(); // request.getSession(true) 와 동일
+        //request.getSession(true)  => 세션이 있으면 기존 세션을 반환 / 세션이 없으면 새로운 세션을 생성해서 반환
+        //request.getSession(false) => 세션이 있으면 기존 세션을 반환 / 세션이 없으면 새로운 세션을 생성하지 않음 , null 반환
+        
         //세션에 로그인 회원정보 보관
         session.setAttribute(SessionConst.LOGIN_MEMBER,loginMember);
 
@@ -104,6 +109,7 @@ public class LoginController {
         return "redirect:/";
     }
 
+    //RedirectURL 처리
     @PostMapping("/login")
     public String loginV4(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult,
                           @RequestParam(defaultValue = "/") String redirectURL,
