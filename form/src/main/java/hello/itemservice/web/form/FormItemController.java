@@ -18,11 +18,22 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/form/items")
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Slf4j
 public class FormItemController {
 
     private final ItemRepository itemRepository;
+    private final List<DeliveryCode> deliveryCodes = new ArrayList<>();
+
+    public FormItemController(ItemRepository itemRepository){
+        log.info("호출");
+        this.itemRepository = itemRepository;
+        deliveryCodes.add(new DeliveryCode("FAST","빠른 배송"));
+        deliveryCodes.add(new DeliveryCode("NORMAL","일반 배송"));
+        deliveryCodes.add(new DeliveryCode("SLOW","느린 배송"));
+    }
+
+
 
     //자동으로 모델에 담기게 해준다.
     @ModelAttribute("regions")
@@ -37,10 +48,19 @@ public class FormItemController {
 
     @ModelAttribute("deliveryCodes")
     public List<DeliveryCode> deliveryCodes(){
+
+        /*
+             @ModelAttribute 가 있는 deliveryCodes() 메서드는 컨트롤러가 호출 될 때 마다 사용되므로
+            deliveryCodes 객체도 계속 생성된다. 이런 부분은 미리 생성해두고 재사용하는 것이 더 효율적이다.
+
+        * */
+        /*
         List<DeliveryCode> deliveryCodes = new ArrayList<>();
         deliveryCodes.add(new DeliveryCode("FAST","빠른 배송"));
         deliveryCodes.add(new DeliveryCode("NORMAL","일반 배송"));
         deliveryCodes.add(new DeliveryCode("SLOW","느린 배송"));
+
+         */
 
         return deliveryCodes;
     }
