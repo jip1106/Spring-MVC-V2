@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <header th:fragment="commonHeader">
+        <hr>
+        <div>
+            헤더영역 입니다
+            <div th:text="${member.id}"></div>
+            <div th:text="${member.name}"></div>
+            <div th:text="${member.age}"></div>
+            <div th:text="${member.point.money}"></div>
+        </div>
+
+        <hr>
+    </header>
+</body>
+</html>

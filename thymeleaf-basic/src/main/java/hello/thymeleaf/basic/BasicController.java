@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/basic")
@@ -29,7 +26,15 @@ public class BasicController {
 
     @GetMapping("/text-unescaped")
     public String textUnescaped(Model model){
-        model.addAttribute("data", "Hello <b>Spring</b>");
+        model.addAttribute("data", "Hello <b>Spring <br> </b>");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Hello <b>Spring</b> <br>");
+        sb.append("th:text , th:utext 테스트 <br>");
+
+        String str = sb.toString();
+
+        model.addAttribute("str", str);
+
         return "basic/text-unescaped";
     }
 
@@ -108,14 +113,58 @@ public class BasicController {
     @GetMapping("/each")
     public String each(Model model) {
         addUsers(model);
+
+        //map test
+        createMap(model);
+        createMapList(model);
         return "basic/each";
     }
+
     private void addUsers(Model model) {
         List<User> list = new ArrayList<>();
         list.add(new User("userA", 10));
         list.add(new User("userB", 20));
         list.add(new User("userC", 30));
         model.addAttribute("users", list);
+    }
+
+    private void addUsers2(Model model){
+        List<User> list = new ArrayList<>();
+        list.add(new User(1L,"userA", 10));
+        list.add(new User(2L,"userB", 20));
+        list.add(new User(3L,"userC", 30));
+        model.addAttribute("users", list);
+    }
+
+    private void createMap(Model model){
+        Map<Long, List<User>> map = new HashMap<>();
+        addUsers2(model);
+        List<User> users = (List<User>)model.getAttribute("users");
+
+        for (User user : users) {
+            List<User> list = new ArrayList<>();
+            list.add(user);
+
+            map.put(user.getId(),list);
+        }
+
+        model.addAttribute("mapData", map);
+    }
+
+    private void createMapList(Model model){
+        Map<Long, List<User>> map = new HashMap<>();
+        addUsers2(model);
+
+        List<User> users = (List<User>)model.getAttribute("users");
+
+        for (User user : users) {
+            List<User> list = new ArrayList<>();
+            list.add(user);
+
+            map.put(user.getId(),list);
+        }
+
+        model.addAttribute("mapListData", map);
     }
 
     @GetMapping("/condition")
@@ -147,12 +196,17 @@ public class BasicController {
 
     @Data
     static class User{
+        private Long id;
         private String username;
         private int age;
 
         public User(String username, int age){
             this.username = username;
             this.age = age;
+        }
+        public User(Long id, String username, int age){
+            this(username, age);
+            this.id = id;
         }
     }
 }

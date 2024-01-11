@@ -16,6 +16,7 @@
     <td th:text="${user.age}">0</td>
   </tr>
 </table>
+
 <h1>반복 상태 유지</h1>
 <table border="1">
   <tr>
@@ -48,5 +49,30 @@
     </td>
   </tr>
 </table>
+
+<h1>Map데이터 꺼내기</h1>
+<table border="1">
+  <tr>
+    <th>key</th>
+    <th>value</th>
+  </tr>
+  <tr th:each="map : ${mapData}">
+    <td th:text="${map.key}">username</td>
+    <td th:text="${map.value}">0</td>
+  </tr>
+</table>
+
+
+<h1>Map List데이터 꺼내기</h1>
+
+<ul th:each=" map : ${mapListData}">
+  <li th:text="|key :: ${map.key}| "></li>
+  <li th:text="|value :: ${map.value}|"></li>
+  <li th:each="list : ${map.value}">
+    <span th:text="|username :: ${ list.username }|"></span>
+    <span th:text="|userAge :: ${ list.age }">|</span>
+  </li>
+</ul>
+
 </body>
 </html>

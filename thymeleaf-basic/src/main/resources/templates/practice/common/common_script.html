@@ -1,0 +1,9 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="import_script(title, link)">
+    <title th:replace="${title}">공통 사용 스크립트, css 삽입</title>
+    <!-- 공통 -->
+    <script type="text/javascript" th:src="@{/js/jquery-3.7.1.min.js}"></script>
+
+    <!-- 추가 -->
+    <th:block th:replace="${link}" />
+</head>
