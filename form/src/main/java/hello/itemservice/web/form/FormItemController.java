@@ -1,9 +1,6 @@
 package hello.itemservice.web.form;
 
-import hello.itemservice.domain.item.DeliveryCode;
-import hello.itemservice.domain.item.Item;
-import hello.itemservice.domain.item.ItemRepository;
-import hello.itemservice.domain.item.ItemType;
+import hello.itemservice.domain.item.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -18,21 +15,11 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/form/items")
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class FormItemController {
 
     private final ItemRepository itemRepository;
-    private final List<DeliveryCode> deliveryCodes = new ArrayList<>();
-
-    public FormItemController(ItemRepository itemRepository){
-        log.info("호출");
-        this.itemRepository = itemRepository;
-        deliveryCodes.add(new DeliveryCode("FAST","빠른 배송"));
-        deliveryCodes.add(new DeliveryCode("NORMAL","일반 배송"));
-        deliveryCodes.add(new DeliveryCode("SLOW","느린 배송"));
-    }
-
 
 
     //자동으로 모델에 담기게 해준다.
@@ -62,7 +49,7 @@ public class FormItemController {
 
          */
 
-        return deliveryCodes;
+        return SetDeliveryCode.getCodeList();
     }
 
 
