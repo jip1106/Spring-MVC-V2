@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * BasicErrorController 스프링 부트가 제공하는 기본 오류 메커니즘을 사용하도록 WebServerCustomizer에 있는
  * @Component 를 주석 처리
  */
-//예외 등록
+//예외 등록 -> 서블릿 오류 페이지
 //@Component
 public class WebServerCustomizer implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
     @Override
